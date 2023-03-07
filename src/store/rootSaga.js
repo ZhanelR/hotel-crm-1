@@ -1,21 +1,47 @@
-//26:24 video toolkit saga
 import { takeEvery, all, put } from 'redux-saga/effects';
-import {LOG_IN} from "../store/userActionCreator"
-import {setLoginAndPassToStore} from "../slices/usersSlice"
-import { genActionStyle } from 'antd/es/alert/style';
+import {LOG_IN, REGISTER_SUCCESS, LOG_OUT} from "../store/userActionCreator"
+import {setLoginSuccess, setRegisteredDataToStore, setLogout} from "../slices/usersSlice"
+//import firebase from "../firebase"
+import {auth} from "../firebase"
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { Button, message } from 'antd';
+
 
 export default function* rootSaga() {
     yield all([
-        ...loginSagas
+        ...loginSagas,
       ])
-    // code after all-effect
+    
   }
 
   function* handleLogin (action) {
-    console.log(action.payload);
-    yield put(setLoginAndPassToStore(action.payload))
+    try {
+    const { login, password } = action.payload;
+    const registeredUserCredential = yield signInWithEmailAndPassword(auth, login, password);
+    yield put(setLoginSuccess(registeredUserCredential));
+    } catch (error) {
+    message.info('Failed to authorize user:  ' + error);
+  }
+}
+
+    function* handleLogout () {
+        yield put(setLogout())
+    }   
+    function* handleRegistration (action) {
+        try {
+            // Create a new user account with email and password
+            const { email, password } = action.payload;
+            const userCredential = yield createUserWithEmailAndPassword(auth, email, password);
+            // Set the registered user data to the store
+            yield put(setRegisteredDataToStore(userCredential.user));
+          } catch (error) {
+            message.info('Failed to register user:  ' + error);
+          }
+    
 }
 export const loginSagas = [
   takeEvery(LOG_IN, handleLogin),
+  takeEvery(REGISTER_SUCCESS, handleRegistration), 
+  takeEvery(LOG_OUT, handleLogout),
 ]
 

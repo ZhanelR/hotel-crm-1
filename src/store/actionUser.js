@@ -1,9 +1,12 @@
 import * as types from "./userActionCreator";
-import {auth} from "../firebase";
 
 export const login =(authorizationData) => ({
     type: types.LOG_IN,
     payload: authorizationData,
+});
+
+export const logout = ()=> ({
+    type: types.LOG_OUT,
 });
 
 export const registerStart =() => ({
@@ -20,7 +23,7 @@ export const registerFail =(error) => ({
     payload: error,
 });
 
-export const registerInitiate = (email, password, displayName) => {
+/* export const registerInitiate = (email, password, displayName) => {
     return function (dispatch) {
         dispatch(registerStart());
         auth.createUserWithEmailAndPassword(email, password).then(({user}) => {
@@ -29,5 +32,4 @@ export const registerInitiate = (email, password, displayName) => {
             })
             dispatch(registerSuccess(user))
         }).catch((error) => dispatch(registerFail(error.message)));
-    };
-}
+    }}; */

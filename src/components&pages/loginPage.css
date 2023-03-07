@@ -1,0 +1,45 @@
+.form-сontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* height: '500px'; */
+    height: 100vh;
+    background-color: rgb(201, 213, 222);
+}
+
+.form-itself {
+    background-color: white;
+    margin-left: 80px;
+    margin-right: 0px;
+    padding-left: 30px;
+    padding-top: 20px;
+}
+
+.autorizationHeader {
+    margin-right: 200px;
+    position: absolute;
+    margin-bottom: 350px;
+}
+
+.background-for-text {
+    background-color: white;
+    margin-left: 80px;
+    margin-right: 0px;
+    padding-left: 30px;
+    padding-top: 20px;
+    width:437px;
+    height: 50px;
+}
+
+.text-under-form {
+    font-size: small;
+    margin-right: 165px;
+    margin-top: 20px;
+}
+
+.text-with-link {
+    font-size: small;
+    margin-right: 240px;
+    color: white;
+}

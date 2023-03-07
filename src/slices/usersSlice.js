@@ -1,9 +1,10 @@
 import { createSlice} from "@reduxjs/toolkit";
 
-const initialState = {
+export const initialState = {
     loading: false,
     currentUser: null,
     error: null,
+    isAuthorized: false,
 };
 
 export const usersSlice = createSlice({
@@ -14,20 +15,30 @@ export const usersSlice = createSlice({
       setUser: (state, action) => {
         state.user = action.payload;
       },
-      clearUser: (state, action) => {
-        state.user = null;
+      setLogout: (state) => {
+        state.loginData = null;
+        state.isAuthorized = false;
       },
 
-      setLoginAndPassToStore: (state, action) => {
-        state.pass = action.payload.password;
-        state.login = action.payload.login;
+      setLoginSuccess: (state, action) => {
+        state.loginData = action.payload;
+        state.isAuthorized = true;
+      },
+
+      setRegisteredDataToStore: (state, action) => {
+        state.firstName = action.payload.firstName;
+        state.lastName = action.payload.lastName;
+        state.email = action.payload.email;
+        state.password = action.payload.password;
+        state.confirmPassword = action.payload.confirmPassword;
       }
     },
 })
 
 export const {
-    setLoginAndPassToStore, 
-    clearUser,
+    setLoginSuccess, 
+    setRegisteredDataToStore,
+    setLogout,
     setUser,
 } = usersSlice.actions
 
