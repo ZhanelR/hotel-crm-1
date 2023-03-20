@@ -16,3 +16,11 @@
     font-weight: bold;
     cursor: pointer;
   }
+
+.header-logo {
+    height: 40px;
+}
+
+.avatar {
+    margin-left: 1100px;
+}

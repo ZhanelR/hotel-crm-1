@@ -1,4 +1,4 @@
-import * as types from "./userActionCreator";
+import * as types from "./userActionTypes";
 
 export const login =(authorizationData) => ({
     type: types.LOG_IN,

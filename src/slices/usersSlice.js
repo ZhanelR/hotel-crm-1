@@ -33,13 +33,16 @@ export const usersSlice = createSlice({
         state.confirmPassword = action.payload.confirmPassword;
       }
     },
-})
+
+    
+    }
+  )
 
 export const {
     setLoginSuccess, 
     setRegisteredDataToStore,
     setLogout,
     setUser,
-} = usersSlice.actions
+  } = usersSlice.actions
 
 export default usersSlice.reducer

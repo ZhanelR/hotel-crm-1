@@ -1,5 +1,5 @@
 import { takeEvery, all, put } from 'redux-saga/effects';
-import {LOG_IN, REGISTER_SUCCESS, LOG_OUT} from "../store/userActionCreator"
+import {LOG_IN, REGISTER_SUCCESS, LOG_OUT} from "./userActionTypes"
 import {setLoginSuccess, setRegisteredDataToStore, setLogout} from "../slices/usersSlice"
 //import firebase from "../firebase"
 import {auth} from "../firebase"
@@ -22,7 +22,7 @@ export default function* rootSaga() {
     } catch (error) {
     message.info('Failed to authorize user:  ' + error);
   }
-}
+} 
 
     function* handleLogout () {
         yield put(setLogout())
@@ -32,6 +32,7 @@ export default function* rootSaga() {
             // Create a new user account with email and password
             const { email, password } = action.payload;
             const userCredential = yield createUserWithEmailAndPassword(auth, email, password);
+            console.log("userCredential", userCredential);
             // Set the registered user data to the store
             yield put(setRegisteredDataToStore(userCredential.user));
           } catch (error) {
