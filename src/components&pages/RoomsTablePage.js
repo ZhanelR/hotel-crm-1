@@ -73,7 +73,7 @@ function RoomsTable() {
       width: 100,
       render: (text, record) => (
         <Button type="primary">
-          <Link to={`/rooms?${record.id}`}>
+          <Link to={`/rooms/${record.id}`}>
             More information
           </Link>
         </Button>

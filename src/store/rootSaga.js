@@ -25,7 +25,8 @@ export default function* rootSaga() {
 } 
 
     function* handleLogout () {
-        yield put(setLogout())
+      localStorage.removeItem("loginData");
+      yield put(setLogout())
     }   
     function* handleRegistration (action) {
         try {

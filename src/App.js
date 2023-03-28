@@ -25,7 +25,7 @@ function App() {
       dispatch(addRoomsToStore(postsArr))
 
     })
-    return () => unsubscribe() //отписка от соединение когда компон unmount (напр, если что-то не так и компон не отображ). Иначе трата памяти
+    return () => unsubscribe() //отписка от соединение когда компон unmount (напр, если что-то не так и компон не отображ)
     }, [])
 
 
@@ -36,7 +36,7 @@ function App() {
           <Route path="/" element={<Login/>}/>
           <Route path="/registration" element={<RegistrationForm/>}/>
           <Route path="/rooms-table" element={<RoomsTable/>}/>
-          <Route path="/rooms?:roomId" element={<SingleRoomPage/>} />
+          <Route path="/rooms/:roomId" element={<SingleRoomPage/>} />
         </Route>
       </Routes>
       </Router>

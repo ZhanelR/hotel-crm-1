@@ -4,6 +4,7 @@ export const initialState = {
     loading: false,
     currentRoom: null,
     error: null,
+    items: [],
     //isAuthorized: false,
 };
 

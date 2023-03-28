@@ -24,6 +24,12 @@ function Login() {
   const onFinish = (values) => {
     dispatch(login({login: values.username, password: values.password}));
     
+    if (values.remember) {
+      const data = { login: values.username, password: values.password };
+      localStorage.setItem('loginData', JSON.stringify(data));
+    } else {
+      localStorage.removeItem('loginData');
+    }
   };
 
   return (
@@ -99,48 +105,3 @@ function Login() {
 }
 
 export default Login;
-
-
-/* 
-function Login() {
-  const [userName, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
-  //const history = useHistory();
-  const dispatch = useDispatch();
-  const isAuthorized = useSelector((state) => state.isAuthorized);
-
-
-useEffect(() => {
-
-    if (isAuthorized === true) {
-    navigate('/rooms-table');
-  }
-}, []);
-
-const handleSubmit = (event) => {
-  event.preventDefault();
-  dispatch(login({login: userName, password})).then(() => {
-    navigate('/rooms-table');
-  });
-};
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Username:
-        <input type="text" value={userName} onChange={(event) => setUsername(event.target.value)} />
-      </label>
-      <label>
-        Password:
-        <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
-      </label>
-      <button type="submit">Log In</button>
-      <h2>Do not have account yet?</h2>
-      <h3><Link to="/registration">Register now</Link></h3>
-    </form>
-  );
-}
-
-export default Login;
- */

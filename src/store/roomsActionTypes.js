@@ -1,13 +1,13 @@
 export const ROOMS_TYPES = {
-    STANDARD: 'Standart',
-    DELUXE: 'Deluxe',
-    SUITE: 'Suite',
-  };
-  
-  export const ROOM_TYPE_LABEL = {
-    [ROOMS_TYPES.STANDARD]: 'Standard',
-    [ROOMS_TYPES.DELUXE]: 'Deluxe',
-    [ROOMS_TYPES.SUITE]: 'Suite',
-  };
-  
-  export const ROOM_OCCUPANCY_LIST = ['2', '3', '4'];
+  STANDARD: 'Standart',
+  DELUXE: 'Deluxe',
+  SUITE: 'Suite',
+};
+
+export const ROOM_TYPE_LABEL = {
+  [ROOMS_TYPES.STANDARD]: 'Standard',
+  [ROOMS_TYPES.DELUXE]: 'Deluxe',
+  [ROOMS_TYPES.SUITE]: 'Suite',
+};
+
+export const ROOM_OCCUPANCY_LIST = ['2', '3', '4'];

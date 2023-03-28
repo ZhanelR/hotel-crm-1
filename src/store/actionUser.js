@@ -23,13 +23,4 @@ export const registerFail =(error) => ({
     payload: error,
 });
 
-/* export const registerInitiate = (email, password, displayName) => {
-    return function (dispatch) {
-        dispatch(registerStart());
-        auth.createUserWithEmailAndPassword(email, password).then(({user}) => {
-            user.updateProfile({
-                displayName
-            })
-            dispatch(registerSuccess(user))
-        }).catch((error) => dispatch(registerFail(error.message)));
-    }}; */
+

@@ -22,5 +22,8 @@
 }
 
 .avatar {
-    margin-left: 1100px;
+    margin-left: 1070px;
+    border-radius: 50%;
+    height: 50px;
+    width:55px
 }

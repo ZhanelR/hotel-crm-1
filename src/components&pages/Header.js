@@ -5,18 +5,25 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import "./Header.css";
 import { Link } from "react-router-dom"
+import {login} from "../store/actionUser";
 
 const Header = () => {
   const dispatch = useDispatch()
   const isAuthorized = useSelector((state) => state.user.isAuthorized);
   const navigate = useNavigate();
 
-  const [avatarUrl, setAvatarUrl] = useState('/');
+  //const [avatarUrl, setAvatarUrl] = useState('/');
 
 
   useEffect(() => {
     if (isAuthorized === false) {
+      let loginData = localStorage.getItem("loginData");
+      if(loginData){
+        loginData = JSON.parse(loginData);
+        dispatch(login({ login: loginData.login, password: loginData.password }));
+      }else{
       navigate('/');
+    }
     }
   }, [isAuthorized]);
 
@@ -37,7 +44,7 @@ const Header = () => {
             className="header-logo"
           />
       </Link>
-      <img src={avatarUrl} alt='avatar' className='avatar' />
+      <img src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWq30lJjakol66evxTuoRPURIff_5PHf-snEPrJ4z3&s"} alt='avatar' className='avatar' />
       <button className="header-button" onClick={() => dispatch(logout())}>Log out</button>
     </div>
   )
