@@ -10,6 +10,7 @@ import { dbFirestore } from "./firebase";
 import { addRoomsToStore } from "../src/slices/roomsSlice";
 import {query, collection, onSnapshot} from "firebase/firestore" 
 import SingleRoomPage from './components&pages/SingleRoomPage';
+import moment from 'moment'
 
 function App() {
   const dispatch = useDispatch()
@@ -17,15 +18,21 @@ function App() {
   useEffect(() => {
     const q = query(collection(dbFirestore, 'rooms')) 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {   
-      let postsArr = []
+      let roomsArr = []
       querySnapshot.forEach((doc) => {
-        console.log(doc.data())
-        postsArr.push({...doc.data(), id: doc.title})
+        roomsArr.push({...doc.data(), id: doc.title})
       });
-      dispatch(addRoomsToStore(postsArr))
+      
+      roomsArr[0].table = roomsArr[0].table.map((room) => {
+        if (!room.checkInDate || moment(room.checkInDate).isBefore(moment().format('YYYY-MM-DD'), 'day') ) {
+          return {...room, isCheckedIn:false, guest:"", checkInDate: ''}
+        }
+        return room;
+      }) 
+      dispatch(addRoomsToStore(roomsArr))
 
     })
-    return () => unsubscribe() //отписка от соединение когда компон unmount (напр, если что-то не так и компон не отображ)
+    return () => unsubscribe() 
     }, [])
 
 

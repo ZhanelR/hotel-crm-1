@@ -1,32 +1,23 @@
 import React, { useEffect, useState  } from 'react';
-import { ROOMS_TYPES, ROOM_TYPE_LABEL, ROOM_OCCUPANCY_LIST } from "../store/roomsActionTypes";
+import { ROOMS_TYPES, ROOM_TYPE_LABEL, ROOM_OCCUPANCY_LIST } from "../store/roomsTypes";
 import { Button, Carousel, Col, Descriptions, List, Row, Typography } from 'antd';
 import { Link, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { CheckOutlined, HomeOutlined } from '@ant-design/icons';
-import { getRooms } from '../store/actionRooms';
-
-const propTypes = {};
-//propTypes для проверки правильности передаваемых свойств в компонент, а также для документирования API компонента
-const getSingleRoom = (state, roomId) => state.room.items[roomId];//по id достаю комнаты 
+import ModalCheckIn from "./ModalCheckIn"
+import ModalCheckOut from "./ModalCheckOut"
 
 
+const getSingleRoom = (state, roomId) => {
+  return state.room.items.find(element => element.id == roomId);
+}//по id достаю комнаты 
 
 const SingleRoomPage = () => {
   const { roomId } = useParams();
-
-  //const { search } = useLocation(); //извлекаю search из useLocation(он показ URL), переменной search присваивается значение параметров строки запроса текущего URL.
   const room = useSelector((state) => getSingleRoom(state, roomId));
-
-  //Позже в коде значение search используется в качестве аргумента для функции getSingleRoom, которая выбирает одну комнату из состояния, используя идентификатор, полученный из строки search.
-  const dispatch =useDispatch();
-  useEffect(() => {
-    if (!room?.length) {
-      dispatch(getRooms());
-    }
-  }, [room]);
   
   return room ? (
+    <>
       <Row gutter={[24, 24]}>
         <Col span={24}>
           <Button type="link">
@@ -39,17 +30,21 @@ const SingleRoomPage = () => {
         </Col>
         <Col span={12}>
           <Carousel>
-                {room.Gallery.map((imageUrl) => <img key={imageUrl} src={imageUrl} alt={room.Type} className="slider-image" />)}          
+                {room.gallery.map((imageUrl) => <img key={imageUrl} src={imageUrl} alt={room.type} className="slider-image" />)}          
           </Carousel>
         </Col>
         <Col span={12}>
           <Row justify="space-between">
             <Col>
-              <Typography.Title level={2} underline>{`Room ${room.Number}`}</Typography.Title>
+              <Typography.Title level={2} underline>{`Room ${room.number}`}</Typography.Title>
             </Col>
             <Col>
-              <Button type="primary" className="room-button" disabled={room.isCheckedIn}>Check In</Button>
-              <Button type="primary" className="room-button" disabled={!room.isCheckedIn}>Check Out</Button>
+              <ModalCheckIn room={room}/>
+              <ModalCheckOut room={room}/>
+
+              {/* <Button type="primary" className="room-button" disabled={room.isCheckedIn}>Check In</Button> */}
+              {/* <Button type="primary" className="room-button" disabled={!room.isCheckedIn}>Check Out</Button> */}
+            
             </Col>
           </Row>
           <Row>
@@ -58,10 +53,10 @@ const SingleRoomPage = () => {
                 labelStyle={{ fontWeight: 'bold', alignSelf: 'center' }}
                 column={1}
               >
-                <Descriptions.Item label="Type">{ROOM_TYPE_LABEL[room.Type]}</Descriptions.Item>
-                <Descriptions.Item label="Occupancy">{room.Occupancy}</Descriptions.Item>
-                <Descriptions.Item label="Price">{`${room.Price}$`}</Descriptions.Item>
-                <Descriptions.Item label="Guest">{room.Guest}</Descriptions.Item>
+                <Descriptions.Item label="Type">{ROOM_TYPE_LABEL[room.type]}</Descriptions.Item>
+                <Descriptions.Item label="Occupancy">{room.occupancy}</Descriptions.Item>
+                <Descriptions.Item label="Price">{`${room.price}$`}</Descriptions.Item>
+                <Descriptions.Item label="Guest">{room.guest}</Descriptions.Item>
               </Descriptions>
             </Col>
             <Col span={12}>
@@ -88,13 +83,12 @@ const SingleRoomPage = () => {
         </Col>
         <Col span={24}>
           <Descriptions labelStyle={{ fontWeight: 'bold' }} column={2}>
-            <Descriptions.Item label="Description">{room.Description}</Descriptions.Item>
+            <Descriptions.Item label="Description">{room.description}</Descriptions.Item>
           </Descriptions>
         </Col>
       </Row>
+    </>  
    
-  ): <div>Not enought data to show</div>
+  ): <p>No data</p>
 };
-
-SingleRoomPage.propTypes = propTypes;
 export default SingleRoomPage;

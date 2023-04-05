@@ -1,13 +1,2 @@
-export const ROOMS_TYPES = {
-  STANDARD: 'Standart',
-  DELUXE: 'Deluxe',
-  SUITE: 'Suite',
-};
-
-export const ROOM_TYPE_LABEL = {
-  [ROOMS_TYPES.STANDARD]: 'Standard',
-  [ROOMS_TYPES.DELUXE]: 'Deluxe',
-  [ROOMS_TYPES.SUITE]: 'Suite',
-};
-
-export const ROOM_OCCUPANCY_LIST = ['2', '3', '4'];
+export const CHECK_IN_ROOM = "CHECK_IN_ROOM";
+export const CHECK_OUT_ROOM = "CHECK_OUT_ROOM";

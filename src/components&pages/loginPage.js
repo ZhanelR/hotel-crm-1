@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import {login} from "../store/actionUser";
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-//import { useHistory } from 'react-router-dom';
-import { initialState } from "../slices/usersSlice"
 import { Button, Checkbox, Form, Input } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import "./loginPage.css"

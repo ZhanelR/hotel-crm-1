@@ -1,18 +1,12 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Button, Table, Row, Col, Checkbox } from 'antd';
-import { ROOMS_TYPES, ROOM_TYPE_LABEL, ROOM_OCCUPANCY_LIST } from "../store/roomsActionTypes";
+import { ROOMS_TYPES, ROOM_OCCUPANCY_LIST } from "../store/roomsTypes";
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { addRoomsToStore } from "../slices/roomsSlice"; 
-import MainLayout from "../layouts/MainLayout";
-import { getRooms } from '../store/actionRooms';
-
+import { useSelector } from 'react-redux';
 
 function RoomsTable() {
   const getRoomsState = (state) => state.room.items;
-  //const getSingleRoom = (state, search) => state.rooms[search];
   const rooms = useSelector(getRoomsState) || [];
-  const dispatch = useDispatch();
   const [isChecked, setIsChecked] = useState(false);
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
@@ -20,12 +14,11 @@ function RoomsTable() {
   const filteredRooms = useMemo(() => (isChecked ? rooms.filter((room) => room.isCheckedIn !== isChecked) : rooms), [rooms, isChecked]);
   const guestsOptions = useMemo(() => (!isChecked
     ? rooms
-      .filter((room) => room.Guest)
-      .map((room) => ({ text: room.Guest, value: room.Guest }))
+      .filter((room) => room.guest)
+      .map((room) => ({ text: room.guest, value: room.guest }))
     : []
   ), [rooms, isChecked]);
-  console.log("guestsOptions", guestsOptions);
-  console.log("filteredRooms", filteredRooms);
+  
   const columns = [
     //в колонку маплю все элементы 
     {
@@ -35,37 +28,37 @@ function RoomsTable() {
     },
     {
       title: 'Type',
-      dataIndex: 'Type',
-      key: 'Type',
-      render: (Type) => <span>{ROOM_TYPE_LABEL[Type]}</span>, //если надо отобраз элем нестандартно (напр, добав иконку)
-      filters: Object.values(ROOMS_TYPES).map((Type) => ({ text: ROOM_TYPE_LABEL[Type], value: Type })), //добавл элем в выпадающ список
-      onFilter: (Type, record) => record.Type === Type, //фильтрация 
-      filteredValue: filteredInfo.Type || null,
+      dataIndex: 'type',
+      key: 'type',
+      render: (type) => <span>{type}</span>, //если надо отобраз элем нестандартно (напр, добав иконку)
+      filters: Object.values(ROOMS_TYPES).map((type) => ({ text: type, value: type })), //добавл элем в выпадающ список
+      onFilter: (type, record) => record.type === type, //фильтрация 
+      filteredValue: filteredInfo.type || null,
     },
     {
       title: 'Occupancy',
-      dataIndex: 'Occupancy',
-      key: 'Occupancy',
+      dataIndex: 'occupancy',
+      key: 'occupancy',
       //три строчки ниже - это логика фильтра occupancy
-      filters: ROOM_OCCUPANCY_LIST.map((Occupancy) => ({ text: Occupancy, value: Occupancy })), //тут то, что должно быть в выпадающем списке
-      onFilter: (Occupancy, record) => record.Occupancy === Occupancy, //тут задается то,что я выбрала из выпадающего списка (по какой логике отфильтровывать)
-      filteredValue: filteredInfo.Occupancy || null, //тут отображение уже отфильтрованного 
+      filters: ROOM_OCCUPANCY_LIST.map((occupancy) => ({ text: occupancy, value: occupancy })), //тут то, что должно быть в выпадающем списке
+      onFilter: (occupancy, record) => record.occupancy == occupancy, //тут задается то,что я выбрала из выпадающего списка (по какой логике отфильтровывать)
+      filteredValue: filteredInfo.occupancy || null, //тут отображение уже отфильтрованного 
     },
     {
       title: 'Price',
-      dataIndex: 'Price',
-      key: 'Price',
+      dataIndex: 'price',
+      key: 'price',
       render: (text) => <span>{`${text}$`}</span>,
-      sorter: (a, b) => a.Price - b.Price,
-      sortOrder: sortedInfo.columnKey === 'Price' && sortedInfo.order,
+      sorter: (a, b) => a.price - b.price,
+      sortOrder: sortedInfo.columnKey === 'price' && sortedInfo.order,
     },
     {
       title: 'Guest',
-      dataIndex: 'Guest',
-      key: 'Guest',
+      dataIndex: 'guest',
+      key: 'guest',
       filters: guestsOptions,
-      onFilter: (text, record) => record.Guest.startsWith(text),
-      filteredValue: filteredInfo.Guest || null,
+      onFilter: (text, record) => record.guest.startsWith(text),
+      filteredValue: filteredInfo.guest || null,
     },
     {
       title: '',
@@ -94,12 +87,12 @@ function RoomsTable() {
     setIsChecked(false);
   };
 
-  useEffect(() => {
+/*   useEffect(() => {
     if (!rooms.length) {
       dispatch(getRooms());
     }
   }, [rooms]);
-
+ */
   return (
     
       <Row gutter={[24, 40]} align="middle">

@@ -5,10 +5,11 @@ export const initialState = {
     currentUser: null,
     error: null,
     isAuthorized: false,
+    isShowPopup: false,
 };
 
 export const usersSlice = createSlice({
-    name: 'user', //или users????? 
+    name: 'user',  
     initialState,
 
     reducers: {
@@ -33,18 +34,6 @@ export const usersSlice = createSlice({
         state.confirmPassword = action.payload.confirmPassword;
       },
 
-      checkInStart(state) {
-        state.loading = true;
-        state.error = null;
-      },
-      checkInSuccess(state, action) {
-        state.loading = false;
-        state.user = action.payload;
-      },
-      checkInFailure(state, action) {
-        state.loading = false;
-        state.error = action.payload;
-      },
   
     },
 
@@ -57,9 +46,6 @@ export const {
     setRegisteredDataToStore,
     setLogout,
     setUser,
-    checkInStart,
-    checkInSuccess,
-    checkInFailure,
   } = usersSlice.actions
 
 export default usersSlice.reducer

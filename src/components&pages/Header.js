@@ -12,9 +12,6 @@ const Header = () => {
   const isAuthorized = useSelector((state) => state.user.isAuthorized);
   const navigate = useNavigate();
 
-  //const [avatarUrl, setAvatarUrl] = useState('/');
-
-
   useEffect(() => {
     if (isAuthorized === false) {
       let loginData = localStorage.getItem("loginData");

@@ -1,6 +1,12 @@
-import { ROOMS_TYPES } from "./roomsActionTypes";
+import { CHECK_OUT_ROOM, CHECK_IN_ROOM } from "./roomsActionTypes";
 
-export const getRooms = () => ({ 
-    type: ROOMS_TYPES,  
+//здесь ф-ии, создающие экшны
+export const checkInRoom = (user, room) => ({ 
+    type: CHECK_IN_ROOM,  
+    payload: {user, room}
 });
-//export const getRoomsSuccess = (roomsData) => ({ type: ACTION_TYPES.GET_ROOMS_SUCCESS, payload: roomsData });
+
+export const checkOutRoom = (user, room) => ({ 
+    type: CHECK_OUT_ROOM,  
+    payload: {user, room}
+});
